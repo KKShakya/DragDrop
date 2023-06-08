@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draggable</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h2>Drag & Drop</h2>
+  <div id="flex-col-2">
+
+    <!-- container 1 with container1_items in it-->
+    <div class="container" id="container1">
+      <h2>Container1</h2>
+      <div draggable="true">= Item 1</div>
+      <div draggable="true">= Item 2</div>
+      <div draggable="true">= Item 3</div>
+      <div draggable="true">= Item 4</div>
+    </div>
+
+    <!-- empty container -->
+    <div class="container" id="container2">
+      <h2>Container2</h2>
+    </div>
+
+  </div>
+
+</body>
+
+
+<script type="module">
+
+  let container1 = document.getElementById('container1');
+  let container2 = document.getElementById('container2');
+
+
+
+  // functions for each event
+  const handleDragStart = (e) => {
+    e.target.classList.add('dragging');
+  }
+
+  const handleDragEnd = (e) => {
+    e.target.classList.remove('dragging');
+
+  }
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  }
+
+
+  const handleDragDrop = (e) => {
+    e.preventDefault();
+    let dragging = document.querySelector('.dragging')
+
+    if (e.target.id === 'container1' || e.target.id === 'container2') {
+      e.target.appendChild(dragging);
+    }
+  }
+
+
+  // events for container1
+  let container1_items = document.querySelectorAll('#container1>div');
+
+  container1_items.forEach((ele, idx) => {
+
+    ele.addEventListener('dragstart', handleDragStart)
+    ele.addEventListener('dragend', handleDragEnd)
+
+  })
+
+  container2.addEventListener('dragover', handleDragOver)
+
+  container2.addEventListener('drop', handleDragDrop)
+
+
+
+
+  // events for container2
+
+  let container2_items = document.querySelectorAll('#container2>div');
+
+  container2_items.forEach((ele, idx) => {
+
+    ele.addEventListener('dragstart', handleDragStart)
+    ele.addEventListener('dragend', handleDragEnd)
+
+  })
+
+
+
+  container1.addEventListener('dragover', handleDragOver)
+
+  container1.addEventListener('drop', handleDragDrop)
+
+
+
+
+</script>
+
+</html>
